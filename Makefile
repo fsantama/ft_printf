@@ -6,7 +6,7 @@
 #    By: fsantama <fsantama@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/13 17:16:44 by fsantama          #+#    #+#              #
-#    Updated: 2023/01/19 13:44:44 by fsantama         ###   ########.fr        #
+#    Updated: 2023/05/30 14:40:24 by fsantama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,19 +21,26 @@ SRC = ft_printf.c \
 	  ft_itoa_unsigned.c \
 	  ft_itoa_hexa.c \
 
-OBJS = $(SRC:.c=.o)
+OBJS := $(SRC:.c=.o)
 
-$(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+
+$(NAME) : $(SRC)
+	@$(CC) $(CFLAGS) $(SRC) -o $(NAME)
+	@printf "\e[32m$@ built🗣\e[0m\n"
+
+%.o : %.c
+	@$(CC) $(CFLAGS) $< -c
 
 all: $(NAME)
 
 clean:
-	$(RM) $(OBJS)
+	$(CLEAN) $(OBJS)
+	@printf "\e[31m$(NAME) objects clean done\e[0m\n"
 
-fclean: clean
-	$(RM) $(NAME)
+fclean:
+	$(CLEAN) $(NAME)
+	@printf "\e[31m$(NAME) clean done\e[0m\n"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all NAME clean fclean re
